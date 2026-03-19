@@ -32,7 +32,6 @@ import {
   getCsvFilePath,
   getDemoNameFromPath,
   insertFromCsv,
-  fixInvalidMatchDates,
   type InsertOptions,
 } from './match-insertion';
 import { insertMatchPositions } from './insert-match-positions';
@@ -766,9 +765,6 @@ async function insertChickenDeaths({ outputFolderPath, demoName, databaseSetting
 async function insertMatchFromCsv({ outputFolderPath, demoName, databaseSettings }: InsertOptions) {
   try {
     const csvFilePath = getCsvFilePath(outputFolderPath, demoName, '_match.csv');
-
-    // Fix invalid dates that may occur after CS2 updates before inserting
-    await fixInvalidMatchDates(csvFilePath);
 
     await insertFromCsv<MatchTable>({
       databaseSettings,
